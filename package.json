@@ -1,7 +1,7 @@
 {
   "name": "nuevaapp",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "tsc && nodemon --exec ts-node src/server.ts",
     "start": "nodemon --watch src --exec ts-node src/server.ts",
