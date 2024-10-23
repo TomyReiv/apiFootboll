@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: nombre-de-tu-aplicacion
+    env: node
+    plan: free  # Puedes cambiar esto a 'starter' o 'pro' según tu plan en Render
+    region: oregon  # Cambia la región si es necesario
+    buildCommand: 'npm install'
+    startCommand: 'node server.js'  # Asegúrate de que este sea el archivo correcto
+    envVars:
+      - key: NODE_VERSION
+        value: 20.13.1  # Especifica la versión de Node.js que estás utilizando
+    autoDeploy: true  # Configura si quieres que el despliegue se ejecute automáticamente tras cada commit
+    branches:
+      only: 
+        - main  # Asegúrate de que coincida con la rama principal de tu repositorio
+
