@@ -450,3 +450,55 @@ export const newFixture = async (
     );
   }
 };
+
+export const newOdds = async (
+  league: any,
+  season: any,
+  fixture: any
+) => {
+  try {
+    const baseUrl = process.env.NEW_API_URL;
+    const url = `${baseUrl}odds?league=${league}&timezone=America/Argentina/Buenos_Aires&season=${season}&fixture=${fixture}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": process.env.NEW_API_KEY_APIFOOTBALL!,
+      },
+    });
+    const result = await response.json();
+    if (result.length === 0) {
+      return { msg: "No hay partidos" };
+    }
+    const info = result.response[0];
+    const filteredData = {
+        league: {
+            id: info.league.id,
+            name: info.league.name,
+            country: info.league.country,
+            logo: info.league.logo,
+            flag: info.league.flag,
+            season: info.league.season
+        },
+        fixture: {
+            id: info.fixture.id,
+            timezone: info.fixture.timezone,
+            date: info.fixture.date,
+            timestamp: info.fixture.timestamp
+        },
+        odds: info.bookmakers
+            .filter((bookmaker: any) => bookmaker.name === "NordicBet")
+            .flatMap((bookmaker: any) =>
+                bookmaker.bets
+                    .filter((bet: any) => bet.name === "Match Winner")
+                    .flatMap((bet: any) => bet.values)
+            )
+    };
+    return filteredData;
+  } catch (error) {
+    throw new Error(
+      `Error al obtener el la informacion: ${(error as Error).message}`
+    );
+  }
+};

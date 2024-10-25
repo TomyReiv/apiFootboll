@@ -109,6 +109,16 @@
   - `from` (string, obligatorio): Fecha en formato YYYY-MM-DD.
   - `to` (string, obligatorio): Fecha en formato YYYY-MM-DD.
 
+### 11. Buscar las probabilidades un partido de una liga.
+
+- **Endpoint:** `/api_odds`
+- **Método:** `GET`
+- **Descripción:** Devuelve las probabilidades de un partido específico.
+- **Parámetros:**
+  - `league` (number, obligatorio): Id de la liga.
+  - `season` (number, obligatorio): Temporada que se busca.
+  - `fixture` (string, obligatorio): Id del partido, se obtiene del endpoint anterior.
+
 ## Ejemplos de Uso
 
 1. **Obtener información de partidos entre dos fechas:**

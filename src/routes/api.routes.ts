@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getMatchApi, getCountriesApi, getRecord, getLeagueApi, getTeamApi, getPlayerApi, getOnePlayerApi, getAllMatchesApi, getAllstandings, getNewFixture } from '../controllers/api.controller';
+import { getMatchApi, getCountriesApi, getRecord, getLeagueApi, getTeamApi, getPlayerApi, getOnePlayerApi, getAllMatchesApi, getAllstandings, getNewFixture, getNewOdds } from '../controllers/api.controller';
 
 const router = Router();
 
@@ -13,6 +13,7 @@ router.get('/api_players', getPlayerApi);
 router.get('/api_Oneplayers', getOnePlayerApi);
 router.get('/api_standings', getAllstandings);
 router.get('/api_fixture', getNewFixture);
+router.get('/api_odds', getNewOdds);
 
 export default router;
 
