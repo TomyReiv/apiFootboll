@@ -1,5 +1,3 @@
-
-
 # API de Partidos de Fútbol
 
 ## Rutas
@@ -90,6 +88,26 @@
 - **Descripción:** Devuelve todos los jugadores con un nombre específico.
 - **Parámetros:**
   - `name` (string, obligatorio): Nombre del jugador.
+
+### 9. Buscar la clasificación de una liga
+
+- **Endpoint:** `/api_standings`
+- **Método:** `GET`
+- **Descripción:** Devuelve la clasificación de una liga en una temprada específica.
+- **Parámetros:**
+  - `id` (number, obligatorio): Id de la liga.
+  - `season` (number, obligatorio): Temporada que se busca.
+
+### 10. Buscar los partidos de una liga en una fecha dada
+
+- **Endpoint:** `/api_fixture`
+- **Método:** `GET`
+- **Descripción:** Devuelve los partidos en una fecha dada.
+- **Parámetros:**
+  - `league` (number, obligatorio): Id de la liga.
+  - `season` (number, obligatorio): Temporada que se busca.
+  - `from` (string, obligatorio): Fecha en formato YYYY-MM-DD.
+  - `to` (string, obligatorio): Fecha en formato YYYY-MM-DD.
 
 ## Ejemplos de Uso
 

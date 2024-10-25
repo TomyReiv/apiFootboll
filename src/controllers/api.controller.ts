@@ -8,10 +8,11 @@ import {
   getPlayer,
   getPOnePlayer,
   getRecords,
+  getStandings,
   getTeam,
+  newFixture,
 } from "../services/api.service";
 import { httpResponse } from "../utils/enumsErrors";
-
 
 const HttpResponse = new httpResponse();
 dotenv.config();
@@ -37,7 +38,7 @@ export const getAllMatchesApi = async (req: Request, res: Response) => {
   try {
     const from = req.query.from as any | undefined;
     const to = req.query.to as any | undefined;
-    const { match_id, league } = req.query
+    const { match_id, league } = req.query;
     const matches = await getAllMatches(from, to, match_id, league);
     if (!matches) {
       return HttpResponse.INVALID_TYPE_ERROR(
@@ -140,6 +141,36 @@ export const getOnePlayerApi = async (req: Request, res: Response) => {
     const { name } = req.query;
     const result = await getPOnePlayer(name);
 
+    if (!result) {
+      return HttpResponse.INVALID_TYPE_ERROR(
+        res,
+        `Error fetching data: ${result.statusText}`
+      );
+    }
+    return HttpResponse.OK(res, result);
+  } catch (error) {
+    return HttpResponse.Error(res, (error as Error).message);
+  }
+};
+export const getAllstandings = async (req: Request, res: Response) => {
+  try {
+    const { id, season } = req.query;
+    const result = await getStandings(id, season);
+    if (!result) {
+      return HttpResponse.INVALID_TYPE_ERROR(
+        res,
+        `Error fetching data: ${result.statusText}`
+      );
+    }
+    return HttpResponse.OK(res, result);
+  } catch (error) {
+    return HttpResponse.Error(res, (error as Error).message);
+  }
+};
+export const getNewFixture = async (req: Request, res: Response) => {
+  try {
+    const { from, to, season, league } = req.query;
+    const result = await newFixture(league, season, from, to);
     if (!result) {
       return HttpResponse.INVALID_TYPE_ERROR(
         res,
