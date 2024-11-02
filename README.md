@@ -125,7 +125,7 @@
 - **Método:** `GET`
 - **Descripción:** Devuelve los jugadores de un equipo.
 - **Parámetros:**
-  - `team` (number, obligatorio): Id de la liga.
+  - `team` (number, obligatorio): Id del equipo.
   - `season` (number, obligatorio): Temporada que se busca.
   - `page` (number, obligatorio): La informacion esta paginada.
 
