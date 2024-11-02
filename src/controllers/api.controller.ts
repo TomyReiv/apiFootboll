@@ -12,6 +12,7 @@ import {
   getTeam,
   newFixture,
   newOdds,
+  newTeamApi,
 } from "../services/api.service";
 import { httpResponse } from "../utils/enumsErrors";
 
@@ -188,6 +189,22 @@ export const getNewOdds = async (req: Request, res: Response) => {
   try {
     const { fixture, season, league } = req.query;
     const result = await newOdds(league, season, fixture);
+    if (!result) {
+      return HttpResponse.INVALID_TYPE_ERROR(
+        res,
+        `Error fetching data`
+      );
+    }
+    return HttpResponse.OK(res, result);
+  } catch (error) {
+    return HttpResponse.Error(res, (error as Error).message);
+  }
+};
+
+export const getNewTeams = async (req: Request, res: Response) => {
+  try {
+    const { team, season, page } = req.query;
+    const result = await newTeamApi(team, season, page); 
     if (!result) {
       return HttpResponse.INVALID_TYPE_ERROR(
         res,

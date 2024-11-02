@@ -119,6 +119,16 @@
   - `season` (number, obligatorio): Temporada que se busca.
   - `fixture` (string, obligatorio): Id del partido, se obtiene del endpoint anterior.
 
+### 11. Buscar las probabilidades un partido de una liga.
+
+- **Endpoint:** `/api_NewTeam`
+- **Método:** `GET`
+- **Descripción:** Devuelve los jugadores de un equipo.
+- **Parámetros:**
+  - `team` (number, obligatorio): Id de la liga.
+  - `season` (number, obligatorio): Temporada que se busca.
+  - `page` (number, obligatorio): La informacion esta paginada.
+
 ## Ejemplos de Uso
 
 1. **Obtener información de partidos entre dos fechas:**

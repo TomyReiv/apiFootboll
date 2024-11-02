@@ -502,3 +502,56 @@ export const newOdds = async (
     );
   }
 };
+
+export const  newTeamApi = async (
+  team: any,
+  season: any,
+  page:any
+) => {
+  try {
+    const baseUrl = process.env.NEW_API_URL;
+    const url = `${baseUrl}players?team=${team}&season=${season}&page=${page}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": process.env.NEW_API_KEY_APIFOOTBALL!,
+      },
+    });
+    const result = await response.json();
+    if (result.length === 0) {
+      return { msg: "No hay partidos" };
+    }
+    const info = result.response;
+    const fixturesInfo = info.map((item: any) => ({
+      player: {
+        id: item.player.id,
+        name: item.player.name,
+        photo: item.player.photo,
+        injured: item.player.injured,
+        statistics: {
+          goals: item.statistics[0].goals.total,
+          assists: item.statistics[0].goals.assists,
+          cards: {
+            yellow: item.statistics[0].cards.yellow,
+            red: item.statistics[0].cards.red
+          }
+        }
+      },
+     
+    }));
+    const resultData = {
+      page:{
+        current:result.paging.current,
+        total: result.paging.total
+      },
+      fixturesInfo
+    }
+    return resultData;
+  } catch (error) {
+    throw new Error(
+      `Error al obtener el la informacion: ${(error as Error).message}`
+    );
+  }
+}
