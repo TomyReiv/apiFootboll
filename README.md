@@ -119,7 +119,7 @@
   - `season` (number, obligatorio): Temporada que se busca.
   - `fixture` (string, obligatorio): Id del partido, se obtiene del endpoint anterior.
 
-### 11. Buscar las probabilidades un partido de una liga.
+### 12. Buscar las probabilidades un partido de una liga.
 
 - **Endpoint:** `/api_NewTeam`
 - **Método:** `GET`
@@ -129,6 +129,13 @@
   - `season` (number, obligatorio): Temporada que se busca.
   - `page` (number, obligatorio): La informacion esta paginada.
 
+### 13. Buscar las ligas y copas de un pais.
+
+- **Endpoint:** `/api_NewLeague`
+- **Método:** `GET`
+- **Descripción:** Devuelve las competencias del país especificado.
+- **Parámetros:**
+  - `search` (string, obligatorio): Nombre del país buscado, World es para las internacionales.
 ## Ejemplos de Uso
 
 1. **Obtener información de partidos entre dos fechas:**

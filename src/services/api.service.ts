@@ -555,3 +555,36 @@ export const  newTeamApi = async (
     );
   }
 }
+
+export const newApiLeague = async (search:any) => {
+  try {
+    const baseUrl = process.env.NEW_API_URL;
+    const url = `${baseUrl}leagues?search=${search}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": process.env.NEW_API_KEY_APIFOOTBALL!,
+      },
+    });
+    const result = await response.json();
+    if (result.length === 0) {
+      return { msg: "No hay partidos" };
+    }
+    const info = result.response;
+    const fixturesInfo = info.map((item: any) =>  ({
+      league: {
+        id: item.league.id,
+        name: item.league.name,
+        logo: item.league.logo,
+        type: item.league.type,
+      },
+    }));
+    return fixturesInfo
+  } catch (error) {
+    throw new Error(
+      `Error al obtener el la informacion: ${(error as Error).message}`
+    );
+  }
+}

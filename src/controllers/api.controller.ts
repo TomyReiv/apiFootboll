@@ -10,6 +10,7 @@ import {
   getRecords,
   getStandings,
   getTeam,
+  newApiLeague,
   newFixture,
   newOdds,
   newTeamApi,
@@ -205,6 +206,22 @@ export const getNewTeams = async (req: Request, res: Response) => {
   try {
     const { team, season, page } = req.query;
     const result = await newTeamApi(team, season, page); 
+    if (!result) {
+      return HttpResponse.INVALID_TYPE_ERROR(
+        res,
+        `Error fetching data`
+      );
+    }
+    return HttpResponse.OK(res, result);
+  } catch (error) {
+    return HttpResponse.Error(res, (error as Error).message);
+  }
+};
+
+export const getNewLeagues = async (req: Request, res: Response) => {
+  try {
+    const { search } = req.query;
+    const result = await newApiLeague(search); 
     if (!result) {
       return HttpResponse.INVALID_TYPE_ERROR(
         res,
