@@ -386,7 +386,7 @@ export const newFixture = async (
     }
     const info = result.response;
     
-    const fixturesInfo = info.map((item: any) => ({
+    const filteredData = info.map((item: any) => ({
       fixtureId: item.fixture.id,
       referee: item.fixture.referee,
       date: item.fixture.date,
@@ -443,7 +443,7 @@ export const newFixture = async (
         },
       },
     }));
-    return fixturesInfo;
+    return filteredData;
   } catch (error) {
     throw new Error(
       `Error al obtener el la informacion: ${(error as Error).message}`
@@ -524,7 +524,7 @@ export const  newTeamApi = async (
       return { msg: "No hay partidos" };
     }
     const info = result.response;
-    const fixturesInfo = info.map((item: any) => ({
+    const filteredData = info.map((item: any) => ({
       player: {
         id: item.player.id,
         name: item.player.name,
@@ -546,7 +546,7 @@ export const  newTeamApi = async (
         current:result.paging.current,
         total: result.paging.total
       },
-      fixturesInfo
+      filteredData
     }
     return resultData;
   } catch (error) {
@@ -573,7 +573,7 @@ export const newApiLeague = async (search:any) => {
       return { msg: "No hay partidos" };
     }
     const info = result.response;
-    const fixturesInfo = info.map((item: any) =>  ({
+    const filteredData = info.map((item: any) =>  ({
       league: {
         id: item.league.id,
         name: item.league.name,
@@ -581,7 +581,52 @@ export const newApiLeague = async (search:any) => {
         type: item.league.type,
       },
     }));
-    return fixturesInfo
+    return filteredData
+  } catch (error) {
+    throw new Error(
+      `Error al obtener el la informacion: ${(error as Error).message}`
+    );
+  }
+}
+
+export const newMatchEnded = async (fixtureId:any) => {
+  try {
+    const baseUrl = process.env.NEW_API_URL;
+    const url = `${baseUrl}fixtures/players?fixture=${fixtureId}`;
+
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "v3.football.api-sports.io",
+        "x-rapidapi-key": process.env.NEW_API_KEY_APIFOOTBALL!,
+      },
+    });
+    const result = await response.json();
+    if (result.length === 0) {
+      return { msg: "No hay partidos" };
+    }
+    const info = result.response;
+    const filteredData = info.map((teamData: any) => ({
+      team: {
+          id: teamData.team.id,
+          name: teamData.team.name,
+          logo: teamData.team.logo,
+          update: teamData.team.update,
+          players: teamData.players.map((playerData: any) => ({
+              id: playerData.player.id,
+              name: playerData.player.name,
+              photo: playerData.player.photo,
+              statistics: {
+                  rating: playerData.statistics[0].games.rating,
+                  goals: playerData.statistics[0].goals.total,
+                  assists: playerData.statistics[0].goals.assists,
+                  yellowCards: playerData.statistics[0].cards.yellow,
+                  redCards: playerData.statistics[0].cards.red
+              }
+          }))
+      }
+  }));
+  return filteredData;
   } catch (error) {
     throw new Error(
       `Error al obtener el la informacion: ${(error as Error).message}`

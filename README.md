@@ -136,6 +136,15 @@
 - **Descripción:** Devuelve las competencias del país especificado.
 - **Parámetros:**
   - `search` (string, obligatorio): Nombre del país buscado, World es para las internacionales.
+
+### 14. Buscar la estadistica de los jugadores de un partido terminado.
+
+- **Endpoint:** `/api_NewMatchEndad`
+- **Método:** `GET`
+- **Descripción:** Devuelve el rendimiento de cada jugador (goles, asisitencias, tarjetas, puntuación).
+- **Parámetros:**
+  - `fixtureId` (number, obligatorio): El id del partido, se obtiene en fixture.
+
 ## Ejemplos de Uso
 
 1. **Obtener información de partidos entre dos fechas:**

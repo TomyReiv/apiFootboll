@@ -12,6 +12,7 @@ import {
   getTeam,
   newApiLeague,
   newFixture,
+  newMatchEnded,
   newOdds,
   newTeamApi,
 } from "../services/api.service";
@@ -222,6 +223,22 @@ export const getNewLeagues = async (req: Request, res: Response) => {
   try {
     const { search } = req.query;
     const result = await newApiLeague(search); 
+    if (!result) {
+      return HttpResponse.INVALID_TYPE_ERROR(
+        res,
+        `Error fetching data`
+      );
+    }
+    return HttpResponse.OK(res, result);
+  } catch (error) {
+    return HttpResponse.Error(res, (error as Error).message);
+  }
+};
+
+export const getNewMatchEnded = async (req: Request, res: Response) => {
+  try {
+    const { fixtureId } = req.query;
+    const result = await newMatchEnded(fixtureId); 
     if (!result) {
       return HttpResponse.INVALID_TYPE_ERROR(
         res,
